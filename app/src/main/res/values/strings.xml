@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AttendanceApp</string>
+    <string name="login_title">Connexion</string>
+    <string name="register_title">Créer un compte</string>
+    <string name="student_dashboard_title">Tableau de bord</string>
+    <string name="manager_dashboard_title">Gestionnaire</string>
+    <string name="scan_qr_title">Scanner le QR Code</string>
+    <string name="history_title">Historique</string>
+    <string name="biometric_title">Vérification d\'identité</string>
+    <string name="biometric_subtitle">Utilisez votre empreinte ou reconnaissance faciale</string>
+    <string name="biometric_description">Requis pour valider votre présence</string>
+    <string name="permission_camera_rationale">La caméra est nécessaire pour scanner les QR Codes de présence.</string>
+    <string name="permission_location_rationale">La localisation est utilisée pour vérifier votre proximité avec la salle de cours.</string>
+    <string name="error_network">Erreur de connexion réseau. Vérifiez votre connexion internet.</string>
+    <string name="error_auth">Email ou mot de passe incorrect.</string>
+    <string name="success_attendance">Présence enregistrée avec succès !</string>
+    <string name="already_marked">Votre présence a déjà été enregistrée pour cette séance.</string>
+    <string name="session_expired">La séance de cours a expiré ou est fermée.</string>
+    <string name="gps_out_of_range">Vous êtes trop loin de la salle de cours.</string>
+</resources>

@@ -1,0 +1,28 @@
+R_DEF: Internal format may change without notice
+local
+string already_marked
+string app_name
+string biometric_description
+string biometric_subtitle
+string biometric_title
+string error_auth
+string error_network
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string gps_out_of_range
+string history_title
+string login_title
+string manager_dashboard_title
+string permission_camera_rationale
+string permission_location_rationale
+string project_id
+string register_title
+string scan_qr_title
+string session_expired
+string student_dashboard_title
+string success_attendance
+style Theme.AttendanceApp
+xml file_paths

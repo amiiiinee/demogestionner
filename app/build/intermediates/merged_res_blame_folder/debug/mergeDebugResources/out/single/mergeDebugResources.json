@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.attendance.app-debug-86:/xml_file_paths.xml.flat",
+        "source": "com.attendance.app-main-88:/xml/file_paths.xml"
+    }
+]

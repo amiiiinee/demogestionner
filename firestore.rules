@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ──────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isManager() {
+      return isAuthenticated() && getUserData().role == 'MANAGER';
+    }
+
+    function isStudent() {
+      return isAuthenticated() && getUserData().role == 'STUDENT';
+    }
+
+    // ── Users collection ──────────────────────
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isManager();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isOwner(userId);
+      allow delete: if false; // No deletion allowed
+    }
+
+    // ── Sessions collection ───────────────────
+    match /sessions/{sessionId} {
+      // Managers: full CRUD on their own sessions
+      allow create: if isManager() && request.resource.data.managerId == request.auth.uid;
+      allow read:   if isAuthenticated();
+      allow update: if isManager() && resource.data.managerId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // ── Attendances collection ────────────────
+    match /attendances/{attendanceId} {
+      // Students: create their own attendance
+      allow create: if isStudent()
+                    && request.resource.data.studentId == request.auth.uid
+                    && isSessionActive(request.resource.data.sessionId);
+
+      // Students: read their own records
+      allow read: if isStudent() && resource.data.studentId == request.auth.uid;
+
+      // Managers: read all attendances for their sessions
+      allow read: if isManager()
+                  && get(/databases/$(database)/documents/sessions/$(resource.data.sessionId)).data.managerId == request.auth.uid;
+
+      allow update: if false; // Immutable once created
+      allow delete: if false;
+    }
+
+    // ── Helper: check session is active ───────
+    function isSessionActive(sessionId) {
+      let session = get(/databases/$(database)/documents/sessions/$(sessionId));
+      return session.data.status == 'ACTIVE';
+    }
+  }
+}
